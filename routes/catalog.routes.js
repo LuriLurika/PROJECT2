@@ -69,7 +69,13 @@ router.get('/:id/edit',  (req, res) => {
 })
 
 router.post('/:id', (req, res) => {
+<<<<<<< HEAD
     const {brand, model, year, color, fuel, type, price, photo, description}= req.body
+=======
+
+    const { brand, model, year, color, fuel, type, price, photo, description } = req.body
+
+>>>>>>> 49b229b61db1da7fb33489e4929f61607f3fbba7
     Car
         .findByIdAndUpdate(req.params.id, {brand, model, year, color, fuel, type, price, photo, description}, { new: true })
         .then(() => res.redirect('/catalog'))
