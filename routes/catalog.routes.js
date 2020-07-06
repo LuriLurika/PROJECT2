@@ -3,6 +3,8 @@ const router = express.Router()
 
 const Car = require("../models/car.model")
 
+const cloudUploader = require('../configs/cloudinary.config')
+
 const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && rolesToCheck.includes(req.user.role) ? next() : res.redirect('/login')
 
 const fuelArray = ['Diésel', 'Gasolina', 'Eléctrico', 'Híbrido', 'Híbrido Enchufable', 'Gas Licuado', 'Gas Natural', 'Otros']
@@ -27,17 +29,31 @@ router.get('/add', checkRole(['BOSS']), (req, res) => {
 
 })
 
-router.post('/add', checkRole(['BOSS']), (req, res) => {
+router.post('/add', cloudUploader.single('imageFile'), checkRole(['BOSS']), (req, res) => {
 
     const { brand, model, year, color, fuel, type, price, photo, description, lat, lng } = req.body
 
-    Car
-        .create({ brand, model, year, color, fuel, type, price, photo, description,location: { type: 'Point', coordinates: [lat, lng] }})
-        .then( newCar => {
-            console.log("New car added", newCar)
-            res.redirect('/catalog')
-        })
-        .catch(err => console.log('BBDD error', err))
+    if (req.file !== undefined) {
+
+        Car
+            .create({ brand, model, year, color, fuel, type, price, photo: req.file.url, description, location: { type: 'Point', coordinates: [lat, lng] } })
+            .then(newCar => {
+                console.log("New car added", newCar)
+                res.redirect('/catalog')
+            })
+            .catch(err => console.log('BBDD error', err))
+         
+    } else {
+
+        Car
+            .create({ brand, model, year, color, fuel, type, price, photo, description, location: { type: 'Point', coordinates: [lat, lng] } })
+            .then(newCar => {
+                console.log("New car added", newCar)
+                res.redirect('/catalog')
+            })
+            .catch(err => console.log('BBDD error', err))
+
+    }  
    
 })
 
@@ -62,14 +78,29 @@ router.get('/:id/edit', checkRole(['BOSS']),  (req, res) => {
 
 })
 
-router.post('/:id', checkRole(['BOSS']), (req, res) => {
+router.post('/:id', cloudUploader.single('imageFile'), checkRole(['BOSS']), (req, res) => {
 
-    const {brand, model, year, color, fuel, type, price, photo, description, lat, lng}= req.body
+    const { brand, model, year, color, fuel, type, price, photo, description, lat, lng } = req.body
+    
+    if (req.file !== undefined) {
 
-    Car
-        .findByIdAndUpdate(req.params.id, {brand, model, year, color, fuel, type, price, photo, description,location: { type: 'Point', coordinates: [lat, lng] }}, { new: true })
-        .then(() => res.redirect('/catalog'))
-        .catch(err => console.log('BBDD error', err))
+        Car
+            .findByIdAndUpdate(req.params.id, { brand, model, year, color, fuel, type, price, photo: req.file.url, description, location: { type: 'Point', coordinates: [lat, lng] } }, { new: true })
+            .then(() => res.redirect('/catalog'))
+            .catch(err => console.log('BBDD error', err))
+    
+    } else {
+
+        req.body.photo = 'https://res.cloudinary.com/dz0aow7wm/image/upload/v1594049637/popinoCar/logo_dmxa3v.png'
+
+        Car
+            .findByIdAndUpdate(req.params.id, { brand, model, year, color, fuel, type, price, photo, description, location: { type: 'Point', coordinates: [lat, lng] } }, { new: true })
+            .then(() => res.redirect('/catalog'))
+            .catch(err => console.log('BBDD error', err))
+
+        console.log(req.body)
+        
+    }
 })
 
 //DELETE 
