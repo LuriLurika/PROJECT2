@@ -20,8 +20,16 @@ const carSchema = new Schema({
         type: String,
         default: 'https: //images.vexels.com/media/users/3/135595/isolated/preview/40f5a24bdee6c119cb7d7cdcafcf7be6-icono-de-c--rculo-de-coche-by-vexels.png'
     },
-    description: String
-}, {
+    description: String,
+    location: {
+        type: {
+            type: String
+        },
+        coordinates: {
+            type: [Number]
+        }
+    }
+    }, {
     timestamps: true
 })
 

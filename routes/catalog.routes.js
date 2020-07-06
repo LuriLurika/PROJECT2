@@ -35,10 +35,10 @@ router.get('/add', (req, res) => {
 
 router.post('/add', (req, res) => {
 
-    const { brand, model, year, color, fuel, type, price, photo, description } = req.body
+    const { brand, model, year, color, fuel, type, price, photo, description, lat, lng } = req.body
 
     Car
-        .create({ brand, model, year, color, fuel, type, price, photo, description })
+        .create({ brand, model, year, color, fuel, type, price, photo, description,location: { type: 'Point', coordinates: [lat, lng] }})
         .then( newCar => {
             console.log("New car added", newCar)
             res.redirect('/catalog')
@@ -69,9 +69,9 @@ router.get('/:id/edit',  (req, res) => {
 })
 
 router.post('/:id', (req, res) => {
-    const {brand, model, year, color, fuel, type, price, photo, description}= req.body
+    const {brand, model, year, color, fuel, type, price, photo, description, lat, lng}= req.body
     Car
-        .findByIdAndUpdate(req.params.id, {brand, model, year, color, fuel, type, price, photo, description}, { new: true })
+        .findByIdAndUpdate(req.params.id, {brand, model, year, color, fuel, type, price, photo, description,location: { type: 'Point', coordinates: [lat, lng] }}, { new: true })
         .then(() => res.redirect('/catalog'))
         .catch(err => console.log('BBDD error', err))
 })
@@ -84,6 +84,19 @@ router.post('/:id/delete', (req, res) => {
         .findByIdAndRemove(req.params.id)
         .then(() => res.redirect('/catalog'))
         .catch(err => console.log('BBDD error', err))
+})
+
+//GOOGLE MAPS
+
+router.get('/:carId/api', (req, res, next) => {
+    Car
+        .findById(req.params.carId)
+        .then(data => {
+            console.log(data)
+            console.log(req.params.carId)
+            res.json([data])
+        })
+        .catch(err => console.log(err))
 })
 
 module.exports = router
