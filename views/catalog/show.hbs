@@ -1,0 +1,32 @@
+<div class="container place-index new">
+    <h1 style="font-weight: 100">{{brand}} {{model}}</h1>
+    
+
+    <h3>{{price}}</h3>
+    
+    <div class="mine">
+        <p>{{year}} | {{color}} | {{fuel}} | {{type}}</p>
+        <img src="{{photo}}" alt="{{brand}} {{model}}">
+        
+        <p>{{description}}</p>
+       
+
+        
+
+    </div>
+    <figure id="myMap"></figure>
+    <hr>
+
+    <a href="/catalog" class="btn btn-info btn-mine">Volver</a>
+    <form action="/catalog/{{id}}/delete" method="post">
+      <button type="submit" class="btn btn-info btn-mine">Eliminar</button>
+    </form>
+    <a href="/catalog/{{_id}}/edit" class="btn btn-info btn-mine">Editar</a>
+</div>
+
+<input type="hidden" name="hiddenId" id="hiddenId" value="{{_id}}">
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/javascripts/mapStyles.js"></script>
+<script src="/javascripts/main.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2ccMln2aPW0DPoNiaRV5cNj7kTMyu6hE&callback=myMap"></script>

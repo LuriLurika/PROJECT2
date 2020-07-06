@@ -1,0 +1,12 @@
+<div class="container place-page">
+
+    <h1 style="font-weight: 100">Catálogo</h1>
+    <a href="/catalog/add" class="btn btn-info btn-mine">Crear anuncio</a>
+    <hr>
+    <div class="class row">
+        {{#each allCars}}
+        {{>carCard this}}
+        {{/each}}
+    </div>
+
+</div>
