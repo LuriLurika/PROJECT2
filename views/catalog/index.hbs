@@ -4,9 +4,16 @@
     <a href="/catalog/add" class="btn btn-info btn-mine">Crear anuncio</a>
     <hr>
     <div class="class row">
-        {{#each allCars}}
-        {{>carCard this}}
-        {{/each}}
+        <div class="col-md-10 ">
+            <div class="class row">
+                {{#each allCars}}
+                {{>carCard this}}
+                {{/each}}
+            </div>
+        </div>
+        <div class="col-md-2">
+            {{>filter}}
+        </div>
     </div>
 
 </div>

@@ -10,12 +10,34 @@ const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && r
 const fuelArray = ['Diésel', 'Gasolina', 'Eléctrico', 'Híbrido', 'Híbrido Enchufable', 'Gas Licuado', 'Gas Natural', 'Otros']
 const typeCarArray = ['Berlina', 'Familiar', 'Coupe', 'Monovolumen', '4x4 SUV', 'Cabrio', 'Pick Up']
 
-router.get('/', (req, res) => {
+function filterCatalog(allCars) {
+    const filterBrand = allCars.map(elm => {
+        return elm.brand
+    }).filter((item, pos, self) => self.indexOf(item) == pos)
+    const filterModel = allCars.map(elm => {
+        return elm.model
+    }).filter((item, pos, self) => self.indexOf(item) == pos)
+    const filterYear = allCars.map(elm => {
+        return elm.year
+    }).filter((item, pos, self) => self.indexOf(item) == pos)
+    const filterColor = allCars.map(elm => {
+        return elm.color
+    }).filter((item, pos, self) => self.indexOf(item) == pos)
+    const filterFuel = allCars.map(elm => {
+        return elm.fuel
+    }).filter((item, pos, self) => self.indexOf(item) == pos)
+    const filterType = allCars.map(elm => {
+        return elm.type
+    }).filter((item, pos, self) => self.indexOf(item) == pos)
+    return {filterBrand, filterModel, filterYear, filterColor, filterFuel,  filterType, allCars}
+}
 
+router.get('/', (req, res) => {
+   
     Car
         .find()
-        .then(allCars => res.render("catalog/index.hbs", {allCars}))
-        .catch(err => console.log('BBDD error', err))
+        .then(allCars => res.render("catalog/index.hbs", filterCatalog(allCars)))
+        .catch(err => console.log('BBDD error', err))    
 })
 
 //ADD
@@ -65,6 +87,35 @@ router.get('/:id', checkRole(['BOSS', 'USER']),  (req, res) => {
         .findById(req.params.id)
         .then(theCar => res.render("catalog/show.hbs", theCar))
         .catch(err => console.log('BBDD error', err))
+})
+
+//FILTER
+
+router.post('/search', (req, res) => {
+    const { brand, model, year, color, fuel, type } = req.body
+    const result = {}
+    if (brand) {
+        result.brand = brand
+    }
+    if (model) {
+        result.model = model
+    }
+    if (year) {
+        result.year = year
+    }
+    if (color) {
+        result.color = color
+    }
+    if (fuel) {
+        result.fuel = fuel
+    }
+    if (type) {
+        result.type = type
+    }
+    Car
+        .find(result)
+        .then(allCars => res.render("catalog/index.hbs", filterCatalog(allCars)))
+        .catch(err => console.log('BBDD error', err))    
 })
 
 //EDIT
@@ -127,6 +178,7 @@ router.get('/:carId/api', (req, res, next) => {
 })
 
 module.exports = router
+
 
 
 
