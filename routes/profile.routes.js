@@ -6,12 +6,11 @@ const User = require('../models/user.model')
 
 //INDEX PERFIL
 
-router.get('/profile',  (req, res) => {
-
-    User
-        .findOne(req.params.id)
-        .then(theUser => res.render("profile/index.hbs", theUser))
-        .catch(err => console.log('BBDD error', err))
+router.get('/',  (req, res) => {
+res.render("profile/index.hbs")
+    //User
+    //    .then(theUser => res.render("profile/index.hbs", theUser))
+    //    .catch(err => console.log('BBDD error', err))
 })
 
 //CREAR ANUNCIO
