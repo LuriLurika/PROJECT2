@@ -9,7 +9,7 @@ const carSchema = new Schema({
     color: String,
     fuel: {
         type: String,
-        enum: ['Diesel', 'Gasolina', 'Eléctrico', 'Híbrido', 'Híbrido Enchufable', 'Gas Licuado', 'Gas Natural', 'Otros']
+        enum: ['Diésel', 'Gasolina', 'Eléctrico', 'Híbrido', 'Híbrido Enchufable', 'Gas Licuado', 'Gas Natural', 'Otros']
     },
     type: {
         type: String,

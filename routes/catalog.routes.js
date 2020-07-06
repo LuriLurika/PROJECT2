@@ -11,7 +11,7 @@ const bcryptSalt = 10
 
 const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && rolesToCheck.includes(req.user.role) ? next() : res.redirect('/login')
 
-const fuelArray = ['Diesel', 'Gasolina', 'Eléctrico', 'Híbrido', 'Híbrido Enchufable', 'Gas Licuado', 'Gas Natural', 'Otros']
+const fuelArray = ['Diésel', 'Gasolina', 'Eléctrico', 'Híbrido', 'Híbrido Enchufable', 'Gas Licuado', 'Gas Natural', 'Otros']
 const typeCarArray = ['Berlina', 'Familiar', 'Coupe', 'Monovolumen', '4x4 SUV', 'Cabrio', 'Pick Up']
 
 router.get('/', (req, res) => {
@@ -69,6 +69,8 @@ router.get('/:id/edit',  (req, res) => {
 })
 
 router.post('/:id', (req, res) => {
+
+    const { brand, model, year, color, fuel, type, price, photo, description } = req.body
 
     Car
         .findByIdAndUpdate(req.params.id, {brand, model, year, color, fuel, type, price, photo, description}, { new: true })

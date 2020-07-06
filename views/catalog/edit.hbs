@@ -4,9 +4,9 @@
             <h1 style="font-weight: 100">Editar anuncio</h1>
         </div>
         <div class="col-md-6">
+            {{#with theCar}}
+            <form action="/catalog/{{id}}" method="POST">
 
-            <form action="/catalog/add" method="POST">
-                {{#with theCar}}
                 <div class="form-group">
                     <label for="name-input">Marca</label>
                     <input name="brand" type="text" class="form-control" id="name-input" value = "{{brand}}">
@@ -35,7 +35,7 @@
 
                 <div class="form-group">
                     <label for="type-list">Tipo de combustible:</label>
-                    <select name="fuelType" class="form-control">
+                    <select name="fuel" class="form-control">
                         <option>Seleccionar</option>
                         {{#each fuelArray}}
                         <option>{{this}}</option>
@@ -47,7 +47,7 @@
 
                 <div class="form-group">
                     <label for="type-list">Tipo de vehículo:</label>
-                    <select name="carType" class="form-control">
+                    <select name="type" class="form-control">
                         <option>Seleccionar</option>
                         {{#each typeCarArray}}
                         <option >{{this}}</option>
