@@ -68,12 +68,12 @@
 
                 <div class="form-group">
                     <label for="photo-input">Latitud</label>
-                    <input name="lat" class="form-control" id="length-input" value = "{{color}}">
+                    <input name="lat" class="form-control" id="length-input" value = "{{location.coordinates.[0]}}">
                 </div>
 
                 <div class="form-group">
                     <label for="photo-input">Longitud</label>
-                    <input name="lng" class="form-control" id="length-input" value = "{{color}}">
+                    <input name="lng" class="form-control" id="length-input" value = "{{location.coordinates.[1]}}">
                 </div>
                 {{/with}}
 
