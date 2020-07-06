@@ -1,13 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const passport = require('passport')
-
 const Car = require("../models/car.model")
-const User = require("../models/user.model")
-
-const bcrypt = require("bcrypt")
-const bcryptSalt = 10
 
 const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && rolesToCheck.includes(req.user.role) ? next() : res.redirect('/login')
 
@@ -24,7 +18,7 @@ router.get('/', (req, res) => {
 
 //ADD
 
-router.get('/add', (req, res) => {
+router.get('/add', checkRole(['BOSS']), (req, res) => {
     
     Car
         .find()
@@ -33,7 +27,7 @@ router.get('/add', (req, res) => {
 
 })
 
-router.post('/add', (req, res) => {
+router.post('/add', checkRole(['BOSS']), (req, res) => {
 
     const { brand, model, year, color, fuel, type, price, photo, description, lat, lng } = req.body
 
@@ -49,7 +43,7 @@ router.post('/add', (req, res) => {
 
 //DETAILS
 
-router.get('/:id',  (req, res) => {
+router.get('/:id', checkRole(['BOSS', 'USER']),  (req, res) => {
 
     Car
         .findById(req.params.id)
@@ -59,7 +53,7 @@ router.get('/:id',  (req, res) => {
 
 //EDIT
 
-router.get('/:id/edit',  (req, res) => {
+router.get('/:id/edit', checkRole(['BOSS']),  (req, res) => {
 
     Car
         .findById(req.params.id)
@@ -68,7 +62,7 @@ router.get('/:id/edit',  (req, res) => {
 
 })
 
-router.post('/:id', (req, res) => {
+router.post('/:id', checkRole(['BOSS']), (req, res) => {
 
     const {brand, model, year, color, fuel, type, price, photo, description, lat, lng}= req.body
 
@@ -80,7 +74,7 @@ router.post('/:id', (req, res) => {
 
 //DELETE 
 
-router.post('/:id/delete', (req, res) => {
+router.post('/:id/delete', checkRole(['BOSS']), (req, res) => {
 
     Car
         .findByIdAndRemove(req.params.id)
