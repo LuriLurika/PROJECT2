@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const passport = require("passport")
 
+
 const User = require("../models/user.model")
 
 const bcrypt = require("bcrypt")
@@ -43,7 +44,8 @@ router.post('/login', passport.authenticate("local", {
     failureRedirect: "/login",
     failureFlash: true,
     passReqToCallback: true,
-    badRequestMessage: 'Rellena todos los campos'
+    badRequestMessage: 'Rellena todos los campos',
+    
 }))
 
 

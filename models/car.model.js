@@ -18,7 +18,7 @@ const carSchema = new Schema({
     price: String,
     photo: {
         type: String,
-        default: 'https: //images.vexels.com/media/users/3/135595/isolated/preview/40f5a24bdee6c119cb7d7cdcafcf7be6-icono-de-c--rculo-de-coche-by-vexels.png'
+        default: 'https://res.cloudinary.com/dz0aow7wm/image/upload/v1594049637/popinoCar/logo_dmxa3v.png'
     },
     description: String,
     location: {

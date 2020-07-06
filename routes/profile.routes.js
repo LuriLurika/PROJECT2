@@ -10,9 +10,11 @@ const typeCarArray = ['Berlina', 'Familiar', 'Coupe', 'Monovolumen', '4x4 SUV', 
 //INDEX PERFIL
 
 router.get('/',  (req, res) => {
-
+console.log(req.params)
     User
+        
         .findOne(req.params.id)
+
         .then(theUser => res.render("profile/index.hbs", theUser))
         .catch(err => console.log('BBDD error', err))
 
