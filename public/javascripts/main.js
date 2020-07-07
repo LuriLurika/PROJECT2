@@ -22,7 +22,6 @@ window.onload = () => {
             .then(carsApi => {
 
                 const cars = carsApi.data
-                console.log(carsApi)
                 cars.forEach(elm => {
                     
                     let center = {

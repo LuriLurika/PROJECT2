@@ -1,0 +1,16 @@
+  <h2>Usuarios</h2>
+
+  {{#each allUsers}}
+
+  <div class = "nameBox">
+    <p>Username: {{username}}</p>
+    <p>Nombre: {{name}}</p>
+
+    <form action="/admin/{{id}}/delete" method="post">
+      <button type="submit" class="btn btn-outline-dark btn-sm">Borrar</button>
+    </form>
+    <hr>
+    <br>
+  </div>
+
+  {{/each}}
