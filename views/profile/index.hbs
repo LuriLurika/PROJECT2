@@ -1,5 +1,5 @@
 <div class="container place-page">
-
+{{username}}
     <h1>¡BIENVENIDO {{username}}!</h1>
     <a href="/catalog/add" class="btn btn-info btn-mine">Crear anuncio</a>
     <hr>
@@ -7,6 +7,9 @@
             <div class="class row">
                 <div class="class col-md-8">
                     <h3>Favoritos</h3>
+                    {{#each favoriteCars}}
+                        {{>favorites this}}
+                    {{/each}}
                 </div>
                
                 <div class="class col-md-4">

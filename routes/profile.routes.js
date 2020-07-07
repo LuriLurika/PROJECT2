@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Car = require('../models/car.model')
 const User = require('../models/user.model')
+const Favorite = require('../models/favorites.model')
 
 const fuelArray = ['Diésel', 'Gasolina', 'Eléctrico', 'Híbrido', 'Híbrido Enchufable', 'Gas Licuado', 'Gas Natural', 'Otros']
 const typeCarArray = ['Berlina', 'Familiar', 'Coupe', 'Monovolumen', '4x4 SUV', 'Cabrio', 'Pick Up']
@@ -9,7 +10,20 @@ const typeCarArray = ['Berlina', 'Familiar', 'Coupe', 'Monovolumen', '4x4 SUV', 
 
 //INDEX PERFIL
 
-router.get('/', (req, res) => res.render("profile/index.hbs",  req.user))
+router.get('/', (req, res) => {
+    console.log('user', req.user)
+    Favorite
+        .find({ user: req.user._id })
+        .populate('car')
+        .then(response => {
+            console.log('response',response)
+            const result = response.map(elm => elm.car)
+            res.render("profile/index.hbs", {favoriteCars: result}) 
+        })
+        .catch(err => console.log('BBDD error', err))
+    
+    
+})
 
 
 //CREAR ANUNCIO
