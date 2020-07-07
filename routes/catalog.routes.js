@@ -10,7 +10,7 @@ const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && r
 const fuelArray = ['Diésel', 'Gasolina', 'Eléctrico', 'Híbrido', 'Híbrido Enchufable', 'Gas Licuado', 'Gas Natural', 'Otros']
 const typeCarArray = ['Berlina', 'Familiar', 'Coupe', 'Monovolumen', '4x4 SUV', 'Cabrio', 'Pick Up']
 
-function filterCatalog(allCars) {
+function filterCatalog(allCars, allCarsFilter) {
     const filterBrand = allCars.map(elm => {
         return elm.brand
     }).filter((item, pos, self) => self.indexOf(item) == pos)
@@ -29,14 +29,14 @@ function filterCatalog(allCars) {
     const filterType = allCars.map(elm => {
         return elm.type
     }).filter((item, pos, self) => self.indexOf(item) == pos)
-    return {filterBrand, filterModel, filterYear, filterColor, filterFuel,  filterType, allCars}
+    return {filterBrand, filterModel, filterYear, filterColor, filterFuel,  filterType, allCars: allCarsFilter}
 }
 
 router.get('/', (req, res) => {
    
     Car
         .find()
-        .then(allCars => res.render("catalog/index.hbs", filterCatalog(allCars)))
+        .then(allCars => res.render("catalog/index.hbs", filterCatalog(allCars, allCars)))
         .catch(err => console.log('BBDD error', err))    
 })
 
@@ -114,7 +114,15 @@ router.post('/search', (req, res) => {
     }
     Car
         .find(result)
-        .then(allCars => res.render("catalog/index.hbs", filterCatalog(allCars)))
+        .then(allCarsFilter => {
+            Car 
+                .find()
+                .then(allCars => {
+                    filterCatalog(allCars)
+                    res.render("catalog/index.hbs", filterCatalog(allCars, allCarsFilter))
+        })
+            
+        })
         .catch(err => console.log('BBDD error', err))    
 })
 
