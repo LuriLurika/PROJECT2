@@ -11,6 +11,7 @@ const typeCarArray = ['Berlina', 'Familiar', 'Coupe', 'Monovolumen', '4x4 SUV', 
 
 router.get('/', (req, res) => res.render("profile/index.hbs",  req.user))
 
+
 //CREAR ANUNCIO
 
 router.get('/new', (req, res) => {

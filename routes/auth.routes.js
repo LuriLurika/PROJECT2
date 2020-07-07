@@ -2,7 +2,6 @@ const express = require("express")
 const router = express.Router()
 const passport = require("passport")
 
-
 const User = require("../models/user.model")
 
 const bcrypt = require("bcrypt")
@@ -13,10 +12,10 @@ const bcryptSalt = 10
 router.get("/signup", (req, res) => res.render("auth/signup"))
 router.post("/signup", (req, res, next) => {
 
-    const { username, password } = req.body
+    const { username, password, name, lastName, address, email, phone } = req.body
 
-    if (!username || !password) {
-        res.render("auth/signup", { errorMsg: "Rellena el usuario y la contraseña" })
+    if (!username || !password || !name || !address || !email || !phone) {
+        res.render("auth/signup", { errorMsg: "Rellena todos los campos obligatorios" })
         return
     }
 
@@ -29,7 +28,7 @@ router.post("/signup", (req, res, next) => {
             const salt = bcrypt.genSaltSync(bcryptSalt)
             const hashPass = bcrypt.hashSync(password, salt)
 
-            User.create({ username, password: hashPass })
+            User.create({ username, password: hashPass, name, lastName, address, email, phone })
                 .then(() => res.redirect("/login"))
                 .catch(() => res.render("auth/signup", { errorMsg: "No se pudo crear el usuario" }))
         })
