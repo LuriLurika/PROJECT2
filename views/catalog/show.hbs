@@ -1,29 +1,33 @@
 <div class="container place-index new">
-    <h1 style="font-weight: 100">{{brand}} {{model}}</h1>
+
+    <h1 style="font-weight: 100">{{theCar.brand}} {{theCar.model}}</h1>
     
 
-    <h3>{{price}}</h3>
+    <h3>{{theCar.price}}</h3>
     
     <div class="mine">
-        <p>{{year}} | {{color}} | {{fuel}} | {{type}}</p>
-        <img src="{{photo}}" alt="{{brand}} {{model}}">
+        <p>{{theCar.year}} | {{theCar.color}} | {{theCar.fuel}} | {{theCar.type}}</p>
+        <img src="{{theCar.photo}}" alt="{{theCar.brand}} {{theCar.model}}">
         
-        <p>{{description}}</p>
+        <p>{{theCar.description}}</p>
     </div>
 
     <figure id="myMap"></figure>
     <hr>
 
     <a href="/catalog" class="btn btn-info btn-mine">Volver</a>
-    <form action="/catalog/{{id}}/delete" method="post">
+    <a href="/catalog/{{theCar.id}}/send" class="btn btn-info btn-mine">Contacta con el Vendedor</a>
+    {{#if isBoss}}
+    <form action="/catalog/{{theCar.id}}/delete" method="post">
       <button type="submit" class="btn btn-info btn-mine">Eliminar</button>
     </form>
-    <a href="/catalog/{{_id}}/edit" class="btn btn-info btn-mine">Editar</a>
+    
+    <a href="/catalog/{{theCar.id}}/edit" class="btn btn-info btn-mine">Editar</a>
+    {{/if}}
 </div>
 
-<input type="hidden" name="hiddenId" id="hiddenId" value="{{_id}}">
+<input type="hidden" name="hiddenId" id="hiddenId" value="{{theCar.id}}">
 
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/javascripts/mapStyles.js"></script>
 <script src="/javascripts/main.js"></script>
-<script src=`https://maps.googleapis.com/maps/api/js?key=${process.env.MAPS_KEY}&callback=myMap`></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=---------------------&callback=myMap"></script>

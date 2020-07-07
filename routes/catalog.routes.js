@@ -4,8 +4,12 @@ const router = express.Router()
 const Car = require("../models/car.model")
 
 const cloudUploader = require('../configs/cloudinary.config')
+const { defaultMaxListeners } = require('nodemailer/lib/mailer')
+
+const mailer = require('../configs/nodemailer.config')
 
 const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && rolesToCheck.includes(req.user.role) ? next() : res.redirect('/login')
+
 
 const fuelArray = ['Diésel', 'Gasolina', 'Eléctrico', 'Híbrido', 'Híbrido Enchufable', 'Gas Licuado', 'Gas Natural', 'Otros']
 const typeCarArray = ['Berlina', 'Familiar', 'Coupe', 'Monovolumen', '4x4 SUV', 'Cabrio', 'Pick Up']
@@ -33,11 +37,24 @@ function filterCatalog(allCars, allCarsFilter) {
 }
 
 router.get('/', (req, res) => {
+
+    if(req.user == undefined) { 
    
-    Car
-        .find()
-        .then(allCars => res.render("catalog/index.hbs", filterCatalog(allCars, allCars)))
-        .catch(err => console.log('BBDD error', err))    
+        Car
+            .find()
+            .then(allCars => res.render("catalog/index.hbs", {filter: filterCatalog(allCars, allCars), allCars: allCars}))
+            .catch(err => console.log('BBDD error', err)) 
+            
+    } else {
+
+        const isUser = req.user.role == "BOSS" || "USER"
+
+        Car
+            .find()
+            .then(allCars => res.render("catalog/index.hbs", {filter: filterCatalog(allCars, allCars), isUser: isUser, allCars: allCars}))
+            .catch(err => console.log('BBDD error', err)) 
+
+    }
 })
 
 //ADD
@@ -83,9 +100,13 @@ router.post('/add', cloudUploader.single('imageFile'), checkRole(['BOSS']), (req
 
 router.get('/:id', checkRole(['BOSS', 'USER']),  (req, res) => {
 
+    const isBoss = req.user.role == 'BOSS'
+
+    console.log(isBoss)
+
     Car
         .findById(req.params.id)
-        .then(theCar => res.render("catalog/show.hbs", theCar))
+        .then(theCar => res.render("catalog/show.hbs", {theCar, isBoss}))
         .catch(err => console.log('BBDD error', err))
 })
 
@@ -119,7 +140,7 @@ router.post('/search', (req, res) => {
                 .find()
                 .then(allCars => {
                     filterCatalog(allCars)
-                    res.render("catalog/index.hbs", filterCatalog(allCars, allCarsFilter))
+                    res.render("catalog/index.hbs", {filter: filterCatalog(allCars, allCarsFilter)})
         })
             
         })
@@ -170,6 +191,26 @@ router.post('/:id/delete', checkRole(['BOSS']), (req, res) => {
         .findByIdAndRemove(req.params.id)
         .then(() => res.redirect('/catalog'))
         .catch(err => console.log('BBDD error', err))
+})
+
+//NODEMAILER
+
+router.get('/:id/send', (req, res) => res.render('catalog/email'))
+
+router.post('/', (req, res) => {
+
+    let { email, subject, message } = req.body
+
+    mailer.sendMail({
+        from: '"PopinoCar" <popinocar@gmail.com>',
+        to: email,
+        subject: subject,
+        text: message,
+        html: `<b>${message}</b>`
+
+    })
+        .then(info => res.render('catalog/email-resume', { email, subject, message, info }))
+        .catch(err => console.log(err))
 })
 
 //GOOGLE MAPS
