@@ -12,15 +12,23 @@ const typeCarArray = ['Berlina', 'Familiar', 'Coupe', 'Monovolumen', '4x4 SUV', 
 
 router.get('/', (req, res) => {
     console.log('user', req.user)
-    Favorite
-        .find({ user: req.user._id })
-        .populate('car')
-        .then(response => {
-            console.log('response',response)
-            const result = response.map(elm => elm.car)
-            res.render("profile/index.hbs", {favoriteCars: result}) 
-        })
-        .catch(err => console.log('BBDD error', err))
+    if (req.user) {
+        Promise.all([
+            Car.find({ user: req.user._id }),
+            Favorite.find({ user: req.user._id })
+            .populate('car')
+        ]).then(response => {
+            const result = response[1].map(elm => elm.car)
+            res.render("profile/index.hbs", {
+                favoriteCars: result,
+                username: req.user.username,
+                yourCars: response[0]
+            })
+        }).catch(err => console.log('BBDD error', err))      
+    } else {
+        res.redirect('/login')
+    }
+    
     
     
 })

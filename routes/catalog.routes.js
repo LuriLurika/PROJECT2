@@ -13,7 +13,7 @@ const typeCarArray = ['Berlina', 'Familiar', 'Coupe', 'Monovolumen', '4x4 SUV', 
 function filterCatalog(allCars, allCarsFilter) {
     const filterBrand = allCars.map(elm => {
         return elm.brand
-    }).filter((item, pos, self) => self.indexOf(item) == pos)
+    }).filter((item, pos, self) => self.indexOf(item) == pos)//el filter es para eliminar los duplicados.
     const filterModel = allCars.map(elm => {
         return elm.model
     }).filter((item, pos, self) => self.indexOf(item) == pos)
@@ -58,7 +58,7 @@ router.post('/add', cloudUploader.single('imageFile'), checkRole(['BOSS']), (req
     if (req.file !== undefined) {
 
         Car
-            .create({ brand, model, year, color, fuel, type, price, photo: req.file.url, description, location: { type: 'Point', coordinates: [lat, lng] } })
+            .create({ brand, model, year, color, fuel, type, price, photo: req.file.url, description, user: req.user._id, location: { type: 'Point', coordinates: [lat, lng] } })
             .then(newCar => {
                 console.log("New car added", newCar)
                 res.redirect('/catalog')
@@ -112,18 +112,23 @@ router.post('/search', (req, res) => {
     if (type) {
         result.type = type
     }
-    Car
+    Promise.all([
+        Car.find(result),
+        Car.find()
+    ]).then(response => {
+         res.render("catalog/index.hbs", filterCatalog(response[1], response[0]))
+    }).catch(err => console.log('BBDD error', err))
+    /*Car
         .find(result)
         .then(allCarsFilter => {
             Car 
                 .find()
                 .then(allCars => {
-                    filterCatalog(allCars)
                     res.render("catalog/index.hbs", filterCatalog(allCars, allCarsFilter))
         })
             
         })
-        .catch(err => console.log('BBDD error', err))    
+        .catch(err => console.log('BBDD error', err))  */  
 })
 
 //EDIT

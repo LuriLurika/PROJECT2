@@ -28,7 +28,11 @@ const carSchema = new Schema({
         coordinates: {
             type: [Number]
         }
-    }
+    },
+    user: {
+        type: mongoose.ObjectId,
+        ref: 'User'
+        }
     }, {
     timestamps: true
 })

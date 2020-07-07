@@ -1,7 +1,4 @@
-
-
 window.onload = () => {
-    console.log('estoy en el onload')
     const newFavorites = document.querySelectorAll('#favorite') //BUSCAMOS TODOS LOS ELEMENTOS QUE QUEREMOS ACTUALIZAR
     newFavorites.forEach(elm => { //NOS DEVUELVE TODOS LOS ELEMENTOS  (NEWFAVORITES) Y POR CADA ELEMENTO ITERAMOS PARA AÑADIRLE LA FUNCIONALIDAD QUE QUEREMOS
        elm.addEventListener('click', e => { // SOBREESCRIBIMOS EL CLICK POR:

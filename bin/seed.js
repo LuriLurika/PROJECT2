@@ -23,7 +23,8 @@ const cars = [{
         location: {
             type: 'Point',
             coordinates: [40.378677, -3.531051]
-        }
+        },
+        user: '5f021bcbb8036c41a04b8213'
     },
     {
         brand: 'SKODA',
@@ -38,7 +39,8 @@ const cars = [{
         location: {
             type: 'Point',
             coordinates: [40.300452, -3.731259]
-        }
+        },
+        user: '5f021bcbb8036c41a04b8213'
     },
     {
         brand: 'MERCEDES-BENZ',
@@ -53,7 +55,8 @@ const cars = [{
         location: {
             type: 'Point',
             coordinates: [40.340523, -3.832357]
-        }
+        },
+        user: '5f021bcbb8036c41a04b8213'
     },
     {
         brand: 'PEUGEOT',
@@ -68,7 +71,8 @@ const cars = [{
         location: {
             type: 'Point',
             coordinates: [40.416564, -3.898446]
-        }
+        },
+        user: '5f021bcbb8036c41a04b8213'
     },
     {
         brand: 'CITROEN',
@@ -83,7 +87,8 @@ const cars = [{
         location: {
             type: 'Point',
             coordinates: [40.427460, -3.900635]
-        }
+        },
+        user: '5f021bcbb8036c41a04b8213'
     },
     {
         brand: 'BMW',
@@ -98,7 +103,8 @@ const cars = [{
         location: {
             type: 'Point',
             coordinates: [40.418802, -3.881752]
-        }
+        },
+        user: '5f021bcbb8036c41a04b8213'
     },
     {
         brand: 'MERCEDES-BENZ',
@@ -113,7 +119,8 @@ const cars = [{
         location: {
             type: 'Point',
             coordinates: [40.537974, -3.634301]
-        }
+        },
+        user: '5f021bcbb8036c41a04b8213'
     }
 ]
 
