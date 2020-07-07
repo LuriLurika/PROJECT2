@@ -1,7 +1,9 @@
 <div class="container place-page">
 
     <h1 style="font-weight: 100">Catálogo</h1>
+    {{#if isUser}}
     <a href="/catalog/add" class="btn btn-info btn-mine">Crear anuncio</a>
+    {{/if}}
     <hr>
     <div class="class row">
         <div class="col-md-10 ">

@@ -3,7 +3,7 @@
         <label for="type-list">Marca:</label>
         <select name="brand" class="form-control">
             <option value="">Seleccionar</option>
-            {{#each filterBrand}}
+            {{#each filter.filterBrand}}
             <option>{{this}}<type/option>
             {{/each}}
 
@@ -14,7 +14,7 @@
         <label for="type-list">Modelo:</label>
         <select name="model" class="form-control">
             <option value="">Seleccionar</option>
-            {{#each filterModel}}
+            {{#each filter.filterModel}}
             <option >{{this}}</option>
             {{/each}}
 
@@ -25,7 +25,7 @@
         <label for="type-list">Año:</label>
         <select name="year" class="form-control">
             <option value="">Seleccionar</option>
-            {{#each filterYear}}
+            {{#each filter.filterYear}}
             <option>{{this}}</option>
             {{/each}}
 
@@ -36,7 +36,7 @@
         <label for="type-list">Color:</label>
         <select name="color" class="form-control">
             <option value="">Seleccionar</option>
-            {{#each filterColor}}
+            {{#each filter.filterColor}}
             <option>{{this}}</option>
             {{/each}}
 
@@ -47,7 +47,7 @@
         <label for="type-list">Tipo de combustible:</label>
         <select name="fuel" class="form-control">
             <option value="">Seleccionar</option>
-            {{#each filterFuel}}
+            {{#each filter.filterFuel}}
             <option>{{this}}</option>
             {{/each}}
 
@@ -59,7 +59,7 @@
         <label for="type-list">Tipo de vehículo:</label>
         <select name="type" class="form-control">
             <option value="">Seleccionar</option>
-            {{#each filterType}}
+            {{#each filter.filterType}}
             <option>{{this}}</option>
             {{/each}}
 

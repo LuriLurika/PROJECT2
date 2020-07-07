@@ -27,10 +27,7 @@ router.get('/', (req, res) => {
         }).catch(err => console.log('BBDD error', err))      
     } else {
         res.redirect('/login')
-    }
-    
-    
-    
+    }   
 })
 
 
