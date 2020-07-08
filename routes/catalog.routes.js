@@ -59,7 +59,7 @@ router.get('/', (req, res) => {
 
 //ADD
 
-router.get('/add', checkRole(['BOSS']), (req, res) => {
+router.get('/add', checkRole(['BOSS', 'USER']), (req, res) => {
     
     Car
         .find()
@@ -68,7 +68,7 @@ router.get('/add', checkRole(['BOSS']), (req, res) => {
 
 })
 
-router.post('/add', cloudUploader.single('imageFile'), checkRole(['BOSS']), (req, res) => {
+router.post('/add', cloudUploader.single('imageFile'), checkRole(['BOSS', 'USER']), (req, res) => {
 
     const { brand, model, year, color, fuel, type, price, photo, description, lat, lng } = req.body
 
@@ -85,7 +85,7 @@ router.post('/add', cloudUploader.single('imageFile'), checkRole(['BOSS']), (req
     } else {
 
         Car
-            .create({ brand, model, year, color, fuel, type, price, photo, description, location: { type: 'Point', coordinates: [lat, lng] } })
+            .create({ brand, model, year, color, fuel, type, price, photo, description, user: req.user._id, location: { type: 'Point', coordinates: [lat, lng] } })
             .then(newCar => {
                 console.log("New car added", newCar)
                 res.redirect('/catalog')
