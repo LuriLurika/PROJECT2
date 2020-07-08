@@ -7,6 +7,7 @@ const cloudUploader = require('../configs/cloudinary.config')
 const { defaultMaxListeners } = require('nodemailer/lib/mailer')
 
 const mailer = require('../configs/nodemailer.config')
+const Favorite = require('../models/favorites.model')
 
 const checkRole = rolesToCheck => (req, res, next) => req.isAuthenticated() && rolesToCheck.includes(req.user.role) ? next() : res.redirect('/login')
 
@@ -42,17 +43,42 @@ router.get('/', (req, res) => {
    
         Car
             .find()
-            .then(allCars => res.render("catalog/index.hbs", {filter: filterCatalog(allCars, allCars), allCars: allCars}))
+            .then(allCars => {
+                const favorite = allCars.map(x => x._doc).map(elm => {
+                    return {
+                        ...elm,
+                        isFavorite: false
+                    }
+                })
+                res.render("catalog/index.hbs", { filter: filterCatalog(allCars, allCars), allCars: favorite })
+            })
             .catch(err => console.log('BBDD error', err)) 
             
     } else {
 
         const isUser = req.user.role == "BOSS" || "USER"
 
-        Car
-            .find()
-            .then(allCars => res.render("catalog/index.hbs", {filter: filterCatalog(allCars, allCars), isUser: isUser, allCars: allCars}))
-            .catch(err => console.log('BBDD error', err)) 
+        Promise.all([
+            Favorite
+                .find({ user: req.user._id })
+                .populate('car'),
+             Car
+                 .find()
+             .populate('user')
+        ]).then(response => {
+                const favorites = response[1].map(x=> x._doc).map(elm => {
+                    return {
+                        ...elm, isFavorite: response[0].some(fav => {
+                            console.log('comparacióin')
+                            console.log(fav.car._id)
+                            console.log(elm._id)
+                         return `${fav.car._id}` === `${elm._id}`
+                        })
+                    }
+                }) 
+                res.render("catalog/index.hbs", { filter: filterCatalog(response[1], response[1]), isUser, allCars: favorites })        
+        })
+            .catch(err => console.log('BBDD error', err))
 
     }
 })
