@@ -9,6 +9,7 @@ const bcryptSalt = 10
 
 
 // User signup
+
 router.get("/signup", (req, res) => res.render("auth/signup"))
 router.post("/signup", (req, res, next) => {
 

@@ -27,9 +27,7 @@ router.post('/add/:id', (req, res) => {
                         .catch(err => console.log('error en la BBDD', err))
                 }
             })
-            .catch(err => console.log('error en la BBDD', err))
-        
-        // 
+            .catch(err => console.log('error en la BBDD', err)) 
     } else {
         res.json({result: false})
     }
