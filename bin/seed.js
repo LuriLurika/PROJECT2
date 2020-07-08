@@ -1,8 +1,12 @@
 const mongoose = require('mongoose')
 const Car = require('../models/car.model')
 require('dotenv').config()
-
-mongoose.connect(process.env.DB_REMOTE, {
+const dbtitle = 'coches-molones'
+// mongoose.connect(process.env.DB_REMOTE, {
+//     useUnifiedTopology: true,
+//     useNewUrlParser: true
+// })
+mongoose.connect(`mongodb://localhost/${dbtitle}`, {
     useUnifiedTopology: true,
     useNewUrlParser: true
 })
