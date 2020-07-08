@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Car = require('../models/car.model')
 require('dotenv').config()
 
-mongoose.connect(process.env.DB_REMOTE, {
+mongoose.connect(`mongodb://localhost/${process.env.DB}`, {
     useUnifiedTopology: true,
     useNewUrlParser: true
 })

@@ -28,21 +28,29 @@
         <li class="nav-item">
           <a class="nav-link" href="/catalog">Nuestro catálogo</a>
         </li>
+        {{#if isAuthenticated}}
         <li class="nav-item">
           <a class="nav-link" href="/profile">Tu Perfil</a>
         </li>
+        {{/if}}
+        {{#unless isAuthenticated}}
         <li class="nav-item">
           <a class="nav-link" href="/login">Iniciar sesión</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/signup">Registro</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/logout">Cerrar sesión</a>
-        </li>
+        {{/unless}}
+        {{#if isBoss}}
         <li class="nav-item">
           <a class="nav-link" href="/admin">Usuarios</a>
-        </li>       
+        </li>  
+        {{/if}}
+        {{#if isAuthenticated}}
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Cerrar sesión</a>
+        </li>     
+        {{/if}}
        
       </ul>
     </div>

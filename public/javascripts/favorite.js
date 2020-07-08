@@ -7,13 +7,15 @@ window.onload = () => {
            e.preventDefault()
            
            const hiddenID = elm.parentElement.querySelector("#hiddenIdFav").value
-           
-            if (response.data.result) {
-                console.log('ha ido bien')
-                
-            } else {
-                window.location = "/login"
-            }
+           axios.post(`/favorites/add/${hiddenID}`)
+           .then(response => {
+                if (response.data.result) {
+                    console.log('ha ido bien')
+                    
+                } else {
+                    window.location = "/login"
+                }
+            })
        })
     })   
 }
