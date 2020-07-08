@@ -2,9 +2,7 @@ module.exports = app => {
 
   app.use((req, res, next) => {
     res.locals.isAuthenticated = req.isAuthenticated()
-    if (req.isAuthenticated()) {
-    res.locals.isBoss = req.user.role == "BOSS"
-    }
+    req.isAuthenticated() ? res.locals.isBoss = req.user.role == "BOSS" : null
     next()
   })
   // Base URLS

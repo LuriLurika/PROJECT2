@@ -29,6 +29,7 @@ const carSchema = new Schema({
             type: [Number]
         }
     },
+    email: String,
     user: {
         type: mongoose.ObjectId,
         ref: 'User'

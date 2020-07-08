@@ -96,12 +96,12 @@ router.get('/add', checkRole(['BOSS', 'USER']), (req, res) => {
 
 router.post('/add', cloudUploader.single('imageFile'), checkRole(['BOSS', 'USER']), (req, res) => {
 
-    const { brand, model, year, color, fuel, type, price, photo, description, lat, lng } = req.body
+    const { brand, model, year, color, fuel, type, price, photo, description, email, lat, lng } = req.body
 
     if (req.file !== undefined) {
 
         Car
-            .create({ brand, model, year, color, fuel, type, price, photo: req.file.url, description, user: req.user._id, location: { type: 'Point', coordinates: [lat, lng] } })
+            .create({ brand, model, year, color, fuel, type, price, photo: req.file.url, description, email, user: req.user._id, location: { type: 'Point', coordinates: [lat, lng] } })
             .then(newCar => {
                 console.log("New car added", newCar)
                 res.redirect('/catalog')
@@ -111,7 +111,7 @@ router.post('/add', cloudUploader.single('imageFile'), checkRole(['BOSS', 'USER'
     } else {
 
         Car
-            .create({ brand, model, year, color, fuel, type, price, photo, description, user: req.user._id, location: { type: 'Point', coordinates: [lat, lng] } })
+            .create({ brand, model, year, color, fuel, type, price, photo, description, email, user: req.user._id, location: { type: 'Point', coordinates: [lat, lng] } })
             .then(newCar => {
                 console.log("New car added", newCar)
                 res.redirect('/catalog')
@@ -181,12 +181,12 @@ router.get('/:id/edit', checkRole(['BOSS']),  (req, res) => {
 
 router.post('/:id', cloudUploader.single('imageFile'), checkRole(['BOSS']), (req, res) => {
 
-    const { brand, model, year, color, fuel, type, price, photo, description, lat, lng } = req.body
+    const { brand, model, year, color, fuel, type, price, photo, description, email, lat, lng } = req.body
     
     if (req.file !== undefined) {
 
         Car
-            .findByIdAndUpdate(req.params.id, { brand, model, year, color, fuel, type, price, photo: req.file.url, description, location: { type: 'Point', coordinates: [lat, lng] } }, { new: true })
+            .findByIdAndUpdate(req.params.id, { brand, model, year, color, fuel, type, price, photo: req.file.url, description, email, location: { type: 'Point', coordinates: [lat, lng] } }, { new: true })
             .then(() => res.redirect('/catalog'))
             .catch(err => console.log('BBDD error', err))
     
@@ -195,7 +195,7 @@ router.post('/:id', cloudUploader.single('imageFile'), checkRole(['BOSS']), (req
         req.body.photo = 'https://res.cloudinary.com/dz0aow7wm/image/upload/v1594049637/popinoCar/logo_dmxa3v.png'
 
         Car
-            .findByIdAndUpdate(req.params.id, { brand, model, year, color, fuel, type, price, photo, description, location: { type: 'Point', coordinates: [lat, lng] } }, { new: true })
+            .findByIdAndUpdate(req.params.id, { brand, model, year, color, fuel, type, price, photo, description, email, location: { type: 'Point', coordinates: [lat, lng] } }, { new: true })
             .then(() => res.redirect('/catalog'))
             .catch(err => console.log('BBDD error', err))
 
@@ -216,7 +216,13 @@ router.post('/:id/delete', checkRole(['BOSS']), (req, res) => {
 
 //NODEMAILER
 
-router.get('/:id/send', (req, res) => res.render('catalog/email'))
+router.get('/:id/send', (req, res) => {
+    
+    Car
+        .findById(req.params.id)
+        .then(theCar => res.render('catalog/email', theCar))
+        .catch(err => console.log('BBDD error', err))
+})
 
 router.post('/', (req, res) => {
 
