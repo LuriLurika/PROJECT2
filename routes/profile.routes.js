@@ -36,6 +36,7 @@ router.get('/', (req, res) => {
 router.get('/new', (req, res) => {
     
     Car
+        
         .find()
         .then(allCars => res.render("catalog/new", {allCars, fuelArray, typeCarArray}))
         .catch(err => console.log('BBDD error', err))
