@@ -4,7 +4,6 @@ const router = express.Router()
 const Car = require("../models/car.model")
 
 const cloudUploader = require('../configs/cloudinary.config')
-const { defaultMaxListeners } = require('nodemailer/lib/mailer')
 
 const mailer = require('../configs/nodemailer.config')
 const Favorite = require('../models/favorites.model')
@@ -86,10 +85,12 @@ router.get('/', (req, res) => {
 //ADD
 
 router.get('/add', checkRole(['BOSS', 'USER']), (req, res) => {
+
+    const email = req.user.email
     
     Car
         .find()
-        .then(allCars => res.render("catalog/new.hbs", { allCars, fuelArray, typeCarArray }))
+        .then(allCars => res.render("catalog/new.hbs", { allCars, fuelArray, typeCarArray, email }))
         .catch(err => console.log('BBDD error', err))
 
 })
@@ -172,9 +173,11 @@ router.post('/search', (req, res) => {
 
 router.get('/:id/edit', checkRole(['BOSS']),  (req, res) => {
 
+    const email = req.user.email
+
     Car
         .findById(req.params.id)
-        .then(theCar => res.render("catalog/edit.hbs", {theCar, fuelArray, typeCarArray}))
+        .then(theCar => res.render("catalog/edit.hbs", {theCar, fuelArray, typeCarArray, email}))
         .catch(err => console.log('BBDD error', err))
 
 })
@@ -217,10 +220,12 @@ router.post('/:id/delete', checkRole(['BOSS']), (req, res) => {
 //NODEMAILER
 
 router.get('/:id/send', (req, res) => {
+
+    mail = req.user.email
     
     Car
         .findById(req.params.id)
-        .then(theCar => res.render('catalog/email', theCar))
+        .then(theCar => res.render('catalog/email', { theCar, mail }))
         .catch(err => console.log('BBDD error', err))
 })
 

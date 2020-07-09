@@ -1,0 +1,36 @@
+<div class="container">
+
+    <h1>Contactar con el vendedor</h1>
+
+    <form action='/catalog' method="post">
+        <div class="form-group">
+            <label for="exampleInputEmail1"></label>
+            <input type="hidden" name="email" class="form-control" value= {{theCar.email}} id="exampleInputEmail1">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail2">Concepto</label>
+            <input type="text" name="subject" class="form-control" id="exampleInputEmail2" value = "Vehículo reservado" readonly>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail3">Mensaje</label>
+            <textarea class="form-control" name="message" id="exampleInputEmail3"> Su vehículo {{theCar.brand}} {{theCar.model}} ha sido reservado</textarea>
+        </div>
+        <button type="submit" class="btn btn-dark">Enviar email</button>
+    </form>
+
+    <form action='/catalog' method="post">
+        <div class="form-group">
+            <label for="exampleInputEmail1"></label>
+            <input type="hidden" name="email" class="form-control" value= {{mail}} id="exampleInputEmail1">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail2">Concepto</label>
+            <input type="text" name="subject" class="form-control" id="exampleInputEmail2" value = "Reserva realizada" readonly>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail3">Mensaje</label>
+            <textarea class="form-control" name="message" id="exampleInputEmail3"> Ha realizado la reserva del siguiente vehículo: {{theCar.brand}} {{theCar.model}}</textarea>
+        </div>
+        <button type="submit" class="btn btn-dark">Enviar email</button>
+    </form>
+</div>
