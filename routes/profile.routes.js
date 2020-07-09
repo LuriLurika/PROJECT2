@@ -4,6 +4,9 @@ const Car = require('../models/car.model')
 const User = require('../models/user.model')
 const Favorite = require('../models/favorites.model')
 
+const bcrypt = require("bcrypt")
+const bcryptSalt = 10
+
 const fuelArray = ['Diésel', 'Gasolina', 'Eléctrico', 'Híbrido', 'Híbrido Enchufable', 'Gas Licuado', 'Gas Natural', 'Otros']
 const typeCarArray = ['Berlina', 'Familiar', 'Coupe', 'Monovolumen', '4x4 SUV', 'Cabrio', 'Pick Up']
 
@@ -93,20 +96,25 @@ router.post('/:id/delete', (req, res) => {
 
 //MODIFICAR PERFIL
 
-router.get('/:id/edit-profile', (req, res) => {
+router.get('/edit', (req, res) => {
     
     User    
-        .findById(req.params.id)
+        .findById(req.user.id)
         .then(theUser => res.render("profile/edit-profile", theUser))
         .catch(err => console.log('BBDD error', err))
 })
 
-router.post('/:id', (req, res) => {
+router.post('/', (req, res) => {
 
-    const { username, password } = req.body
+    const {  username, name, lastName, address, email, phone  } = req.body
+
+    if (!username || !name || !address || !email || !phone) {
+        res.render("profile/edit-profile", {  username, name, lastName, address, email, phone, errorMsg: "Rellena todos los campos obligatorios" })
+        return
+    }
 
     User
-        .findByIdAndUpdate(req.params.id, {  username, password }, { new: true })
+        .findByIdAndUpdate(req.user.id, { username, name, lastName, address, email, phone }, { new: true })
         .then(() => res.redirect('/profile'))
         .catch(err => console.log('BBDD error', err))
 })
