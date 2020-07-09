@@ -5,15 +5,15 @@
     <form action='/catalog' method="post">
         <div class="form-group">
             <label for="exampleInputEmail1"></label>
-            <input type="hidden" name="email" class="form-control" value= {{email}} id="exampleInputEmail1">
+            <input type="hidden" name="email" class="form-control" value= {{theCar.email}} id="exampleInputEmail1">
         </div>
         <div class="form-group">
             <label for="exampleInputEmail2">Concepto</label>
-            <input type="text" name="subject" class="form-control" id="exampleInputEmail2">
+            <input type="text" name="subject" class="form-control" id="exampleInputEmail2" value = "Estoy interesado en el anuncio del {{theCar.brand}} {{theCar.model}} con un precio de {{theCar.price}}€" readonly>
         </div>
         <div class="form-group">
             <label for="exampleInputEmail3">Mensaje</label>
-            <textarea class="form-control" name="message" id="exampleInputEmail3"></textarea>
+            <textarea class="form-control" name="message" id="exampleInputEmail3"> Por favor contacte conmigo en la siguiente dirección de correo electronico {{mail}}</textarea>
         </div>
         <button type="submit" class="btn btn-dark">Enviar email</button>
     </form>
