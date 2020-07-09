@@ -17,7 +17,7 @@ const typeCarArray = ['Berlina', 'Familiar', 'Coupe', 'Monovolumen', '4x4 SUV', 
 function filterCatalog(allCars, allCarsFilter) {
     const filterBrand = allCars.map(elm => {
         return elm.brand
-    }).filter((item, pos, self) => self.indexOf(item) == pos)//el filter es para eliminar los duplicados.
+    }).filter((item, pos, self) => self.indexOf(item) == pos) //el filter es para eliminar los duplicados.
     const filterModel = allCars.map(elm => {
         return elm.model
     }).filter((item, pos, self) => self.indexOf(item) == pos)
@@ -33,13 +33,20 @@ function filterCatalog(allCars, allCarsFilter) {
     const filterType = allCars.map(elm => {
         return elm.type
     }).filter((item, pos, self) => self.indexOf(item) == pos)
-    return {filterBrand, filterModel, filterYear, filterColor, filterFuel,  filterType, allCars: allCarsFilter}
+    return {
+        filterBrand,
+        filterModel,
+        filterYear,
+        filterColor,
+        filterFuel,
+        filterType,
+    }
 }
 
 router.get('/', (req, res) => {
 
-    if(req.user == undefined) { 
-   
+    if (req.user == undefined) {
+
         Car
             .find()
             .then(allCars => {
@@ -49,34 +56,41 @@ router.get('/', (req, res) => {
                         isFavorite: false
                     }
                 })
-                res.render("catalog/index.hbs", { filter: filterCatalog(allCars, allCars), allCars: favorite })
+                res.render("catalog/index.hbs", {
+                    filter: filterCatalog(allCars, allCars),
+                    allCars: favorite
+                })
             })
-            .catch(err => console.log('BBDD error', err)) 
-            
+            .catch(err => console.log('BBDD error', err))
+
     } else {
 
-        //const isUser = req.user.role == "BOSS" || "USER"
+        const isUser = req.user.role == "BOSS" || "USER"
 
         Promise.all([
-            Favorite
-                .find({ user: req.user._id })
+                Favorite
+                .find({
+                    user: req.user._id
+                })
                 .populate('car'),
-             Car
+                Car
                 .find()
                 .populate('user')
-        ]).then(response => {
-                const favorites = response[0].map(x=> x._doc).map(elm => {
+            ]).then(response => {
+                const favorites = response[1].map(x => x._doc).map(elm => {
                     return {
-                        ...elm, isFavorite: response[1].some(fav => {
-                            console.log('comparacióin')
-                            console.log(fav.car._id)
-                            console.log(elm._id)
-                         return `${fav.car._id}` === `${elm._id}`
+                        ...elm,
+                        isFavorite: response[0].some(fav => {
+                            return `${fav.car._id}` === `${elm._id}`
                         })
                     }
-                }) 
-                res.render("catalog/index.hbs", { filter: filterCatalog(response[1], response[1]), isUser, allCars: favorites })        
-        })
+                })
+                res.render("catalog/index.hbs", {
+                    filter: filterCatalog(response[1], response[1]),
+                    isUser,
+                    allCars: favorites
+                })
+            })
             .catch(err => console.log('BBDD error', err))
 
     }
@@ -87,45 +101,95 @@ router.get('/', (req, res) => {
 router.get('/add', checkRole(['BOSS', 'USER']), (req, res) => {
 
     const email = req.user.email
-    
+
     Car
         .find()
-        .then(allCars => res.render("catalog/new.hbs", { allCars, fuelArray, typeCarArray, email }))
+        .then(allCars => res.render("catalog/new.hbs", {
+            allCars,
+            fuelArray,
+            typeCarArray,
+            email
+        }))
         .catch(err => console.log('BBDD error', err))
 
 })
 
 router.post('/add', cloudUploader.single('imageFile'), checkRole(['BOSS', 'USER']), (req, res) => {
 
-    const { brand, model, year, color, fuel, type, price, photo, description, email, lat, lng } = req.body
+    const {
+        brand,
+        model,
+        year,
+        color,
+        fuel,
+        type,
+        price,
+        photo,
+        description,
+        email,
+        lat,
+        lng
+    } = req.body
 
     if (req.file !== undefined) {
 
         Car
-            .create({ brand, model, year, color, fuel, type, price, photo: req.file.url, description, email, user: req.user._id, location: { type: 'Point', coordinates: [lat, lng] } })
+            .create({
+                brand,
+                model,
+                year,
+                color,
+                fuel,
+                type,
+                price,
+                photo: req.file.url,
+                description,
+                email,
+                user: req.user._id,
+                location: {
+                    type: 'Point',
+                    coordinates: [lat, lng]
+                }
+            })
             .then(newCar => {
                 console.log("New car added", newCar)
                 res.redirect('/catalog')
             })
             .catch(err => console.log('BBDD error', err))
-         
+
     } else {
 
         Car
-            .create({ brand, model, year, color, fuel, type, price, photo, description, email, user: req.user._id, location: { type: 'Point', coordinates: [lat, lng] } })
+            .create({
+                brand,
+                model,
+                year,
+                color,
+                fuel,
+                type,
+                price,
+                photo,
+                description,
+                email,
+                user: req.user._id,
+                location: {
+                    type: 'Point',
+                    coordinates: [lat, lng]
+                }
+            })
             .then(newCar => {
                 console.log("New car added", newCar)
                 res.redirect('/catalog')
             })
             .catch(err => console.log('BBDD error', err))
 
-    }  
-   
+    }
+
 })
 
 //DETAILS
 
-router.get('/:id', checkRole(['BOSS', 'USER']),  (req, res) => {
+router.get('/:id', checkRole(['BOSS', 'USER']), (req, res) => {
 
     const isBoss = req.user.role == 'BOSS'
 
@@ -133,14 +197,24 @@ router.get('/:id', checkRole(['BOSS', 'USER']),  (req, res) => {
 
     Car
         .findById(req.params.id)
-        .then(theCar => res.render("catalog/show.hbs", {theCar, isBoss}))
+        .then(theCar => res.render("catalog/show.hbs", {
+            theCar,
+            isBoss
+        }))
         .catch(err => console.log('BBDD error', err))
 })
 
 //FILTER
 
 router.post('/search', (req, res) => {
-    const { brand, model, year, color, fuel, type } = req.body
+    const {
+        brand,
+        model,
+        year,
+        color,
+        fuel,
+        type
+    } = req.body
     const result = {}
     if (brand) {
         result.brand = brand
@@ -164,46 +238,98 @@ router.post('/search', (req, res) => {
         Car.find(result),
         Car.find()
     ]).then(response => {
-         res.render("catalog/index.hbs", filterCatalog(response[1], response[0]))
+        res.render("catalog/index.hbs", { filter: filterCatalog(response[1], response[0]), allCars: response[0] })
     }).catch(err => console.log('BBDD error', err))
 
 })
 
 //EDIT
 
-router.get('/:id/edit', checkRole(['BOSS']),  (req, res) => {
+router.get('/:id/edit', checkRole(['BOSS']), (req, res) => {
 
     const email = req.user.email
 
     Car
         .findById(req.params.id)
-        .then(theCar => res.render("catalog/edit.hbs", {theCar, fuelArray, typeCarArray, email}))
+        .then(theCar => res.render("catalog/edit.hbs", {
+            theCar,
+            fuelArray,
+            typeCarArray,
+            email
+        }))
         .catch(err => console.log('BBDD error', err))
 
 })
 
 router.post('/:id', cloudUploader.single('imageFile'), checkRole(['BOSS']), (req, res) => {
 
-    const { brand, model, year, color, fuel, type, price, photo, description, email, lat, lng } = req.body
-    
+    const {
+        brand,
+        model,
+        year,
+        color,
+        fuel,
+        type,
+        price,
+        photo,
+        description,
+        email,
+        lat,
+        lng
+    } = req.body
+
     if (req.file !== undefined) {
 
         Car
-            .findByIdAndUpdate(req.params.id, { brand, model, year, color, fuel, type, price, photo: req.file.url, description, email, location: { type: 'Point', coordinates: [lat, lng] } }, { new: true })
+            .findByIdAndUpdate(req.params.id, {
+                brand,
+                model,
+                year,
+                color,
+                fuel,
+                type,
+                price,
+                photo: req.file.url,
+                description,
+                email,
+                location: {
+                    type: 'Point',
+                    coordinates: [lat, lng]
+                }
+            }, {
+                new: true
+            })
             .then(() => res.redirect('/catalog'))
             .catch(err => console.log('BBDD error', err))
-    
+
     } else {
 
         req.body.photo = 'https://res.cloudinary.com/dz0aow7wm/image/upload/v1594049637/popinoCar/logo_dmxa3v.png'
 
         Car
-            .findByIdAndUpdate(req.params.id, { brand, model, year, color, fuel, type, price, photo, description, email, location: { type: 'Point', coordinates: [lat, lng] } }, { new: true })
+            .findByIdAndUpdate(req.params.id, {
+                brand,
+                model,
+                year,
+                color,
+                fuel,
+                type,
+                price,
+                photo,
+                description,
+                email,
+                location: {
+                    type: 'Point',
+                    coordinates: [lat, lng]
+                }
+            }, {
+                new: true
+            })
             .then(() => res.redirect('/catalog'))
             .catch(err => console.log('BBDD error', err))
 
         console.log(req.body)
-        
+
     }
 })
 
@@ -211,9 +337,12 @@ router.post('/:id', cloudUploader.single('imageFile'), checkRole(['BOSS']), (req
 
 router.post('/:id/delete', checkRole(['BOSS']), (req, res) => {
 
-    Car
-        .findByIdAndRemove(req.params.id)
-        .then(() => res.redirect('/catalog'))
+    Promise.all([
+            Car.findByIdAndRemove(req.params.id),
+            Favorite.findOneAndRemove({
+                car: req.params.id
+            })
+        ]).then(() => res.redirect('/catalog'))
         .catch(err => console.log('BBDD error', err))
 })
 
@@ -222,26 +351,38 @@ router.post('/:id/delete', checkRole(['BOSS']), (req, res) => {
 router.get('/:id/send', (req, res) => {
 
     mail = req.user.email
-    
+
     Car
         .findById(req.params.id)
-        .then(theCar => res.render('catalog/email', { theCar, mail }))
+        .then(theCar => res.render('catalog/email', {
+            theCar,
+            mail
+        }))
         .catch(err => console.log('BBDD error', err))
 })
 
 router.post('/', (req, res) => {
 
-    let { email, subject, message } = req.body
+    let {
+        email,
+        subject,
+        message
+    } = req.body
 
     mailer.sendMail({
-        from: '"PopinoCar" <popinocar@gmail.com>',
-        to: email,
-        subject: subject,
-        text: message,
-        html: `<b>${message}</b>`
+            from: '"PopinoCar" <popinocar@gmail.com>',
+            to: email,
+            subject: subject,
+            text: message,
+            html: `<b>${message}</b>`
 
-    })
-        .then(info => res.render('catalog/email-resume', { email, subject, message, info }))
+        })
+        .then(info => res.render('catalog/email-resume', {
+            email,
+            subject,
+            message,
+            info
+        }))
         .catch(err => console.log(err))
 })
 
@@ -260,7 +401,3 @@ router.get('/:carId/api', (req, res, next) => {
 
 
 module.exports = router
-
-
-
-

@@ -9,7 +9,7 @@ window.onload = () => {
             lng: -3.703813
         },
         zoom: 15,
-        styles: mapStyles.retro
+        styles: mapStyles.electric
     }
 
     myMap = new google.maps.Map(document.getElementById("myMap"), mapOptions)

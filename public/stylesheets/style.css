@@ -30,7 +30,11 @@ body {
   display: none; }
 
 .navbar-mine {
-  background-color: #000000; }
+  background-color: #000000;
+  position: fixed;
+  top: 0;
+  min-width: 100%;
+  z-index: 99; }
 
 .navbar-mine a {
   color: white;
@@ -129,11 +133,12 @@ body {
   padding: 20px;
   width: 100%;
   bottom: 0;
-  padding: 10px; }
+  padding: 10px;
+  position: fixed; }
 
 .container {
   max-width: 100%;
-  margin-top: 40px; }
+  margin-top: 130px; }
 
 .mine-filter {
   padding-top: 20px;
@@ -208,7 +213,6 @@ body {
 
 .email {
   margin-bottom: 290px;
-  margin-top: 100px;
   padding-left: 280px;
   padding-right: 370px; }
 
@@ -236,7 +240,7 @@ body {
   padding-right: 100px; }
 
 .login {
-  min-height: 73vh;
+  min-height: 100%;
   margin-top: 50px;
   min-width: 100%; }
 
