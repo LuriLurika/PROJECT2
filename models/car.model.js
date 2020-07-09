@@ -4,16 +4,16 @@ const Schema = mongoose.Schema
 const carSchema = new Schema({
 
     brand: {
-        type: String,
+        type: String
     },
     model: {
-        type: String,
+        type: String
     },
     year: {
-        type: Number,
+        type: Number
     },
     color: {
-        type: String,
+        type: String
     },
     fuel: {
         type: String,
@@ -24,11 +24,11 @@ const carSchema = new Schema({
         enum: ['Berlina', 'Familiar', 'Coupe', 'Monovolumen', '4x4 SUV', 'Cabrio', 'Pick Up']
     },
     price: {
-        type: String,
+        type: String
     },
     photo: {
         type: String,
-        default: 'https://res.cloudinary.com/dz0aow7wm/image/upload/v1594049637/popinoCar/logo_dmxa3v.png'
+        default: 'https://res.cloudinary.com/dz0aow7wm/image/upload/v1594311468/popinoCar/il_570xN.1702527345_f4ed_yzcqy3.jpg'
     },
     description: String,
     location: {
@@ -40,7 +40,7 @@ const carSchema = new Schema({
         }
     },
     email: {
-        type: String,
+        type: String
     },
     user: {
         type: mongoose.ObjectId,

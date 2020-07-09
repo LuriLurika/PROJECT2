@@ -1,12 +1,12 @@
 <div class="container new">
     <div class="row">
-        <div class="col-md-6">
-            <h1 style="font-weight: 100">Editar anuncio</h1>
+        <div class="col-md-4">
+            <h1>Editar anuncio</h1>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-8">
            
             {{#with theCar}}
-            <form action="/catalog/{{id}}" method="POST" enctype="multipart/form-data">
+            <form action="/catalog/{{id}}" class="form-mine" method="POST" enctype="multipart/form-data">
 
                 <div class="form-group">
                     <label for="name-input">Marca</label>

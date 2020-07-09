@@ -2,25 +2,30 @@
 <div class="container catalog-page">
 
     <h1>¡BIENVENIDO {{username}}!</h1>
-    <a href="/catalog/add" class="btn btn-info">Crear anuncio</a>
+    <a href="/catalog/add" class="btn btn-new">Crear anuncio</a>
     <hr>
     
             <div class="class row">
-                <div class="class col-md-8">
-                    <h3>Favoritos</h3>
-                    {{#each favoriteCars}}
-                        {{>favorites this}}
-                    {{/each}}
+                <div class="class col-md-12 ">
+                    <h3>Tus favoritos</h3>
+                    <div class="row favorites">
+                        {{#each favoriteCars}}
+                            {{>favorites this}}
+                        {{/each}}
+                    </div>
                 </div>
-               
-                <div class="class col-md-4  your-car">
-                    <h3>Tus anuncios</h3>
-                    {{#each yourCars}}
-                        {{>favorites this}}
-                    {{/each}}
-                </div>
-               
             </div>
+            <div class="row">
+                <div class="class col-md-12  your-car">
+                    <h3>Tus anuncios</h3>
+                    <div class="row favorites">
+                        {{#each yourCars}}
+                            {{>favorites this}}
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            
        
     </div>
 </div>

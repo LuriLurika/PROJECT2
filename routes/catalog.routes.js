@@ -56,19 +56,19 @@ router.get('/', (req, res) => {
             
     } else {
 
-        const isUser = req.user.role == "BOSS" || "USER"
+        //const isUser = req.user.role == "BOSS" || "USER"
 
         Promise.all([
             Favorite
                 .find({ user: req.user._id })
                 .populate('car'),
              Car
-                 .find()
-             .populate('user')
+                .find()
+                .populate('user')
         ]).then(response => {
-                const favorites = response[1].map(x=> x._doc).map(elm => {
+                const favorites = response[0].map(x=> x._doc).map(elm => {
                     return {
-                        ...elm, isFavorite: response[0].some(fav => {
+                        ...elm, isFavorite: response[1].some(fav => {
                             console.log('comparacióin')
                             console.log(fav.car._id)
                             console.log(elm._id)

@@ -1,15 +1,16 @@
-<div class="col-md-4">
+<div class="col-md-3">
     <article class="card mine-card">
         <img class="card-img-top" src="{{photo}}" alt="{{name}}">
         <div class="card-body">
-            <h5 class="card-title">{{brand}} {{model}}</h5>
-            <h5 class="card-title">{{price}}</h5>
+            <h5 class="card-title mine-h5">{{brand}} {{model}}</h5>
+            <hr>
+            <h4 class="card-title">{{price}}</h4>
             <hr>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">{{year}} | {{color}} | {{fuel}} | {{type}}</li>
+                <li class="list-group-item mine-li">{{year}} | {{color}} | {{fuel}} | {{type}}</li>
             </ul>
             <span>
-                <div class="card-body">
+                <div class="mine-card-footer">
                     <a href="/catalog/{{_id}}" class="btn btn-sm btn-info">Ver detalles</a>
                     <input type="hidden" name="hiddenIdFav" id="hiddenIdFav" value="{{_id}}">
                     {{#if isFavorite}}

@@ -21,8 +21,9 @@ body {
 }
 
 #myMap {
-  width: 300px;
+  width: 100%;
   height: 300px;
+
 }
 
 .logo{
@@ -49,11 +50,18 @@ body {
   font-weight: bold;
   margin-right: 28px;
 }
+
+.catalog-page{
+  background-color: #EBEBEB;
+  padding-top: 30px;
+}
+
 .catalog-page .card img {
   height: 150px;
   object-fit: cover;
 
 }
+
 .catalog-page .card {
 
   color: #111111;
@@ -62,18 +70,46 @@ body {
 .catalog-page h1{
   font-weight: bold;
   text-align: center;
-  width: 3rem;
+  padding-top: 40px;
 }
 
 .mine-card {
   margin-bottom: 30px;
-
   background-color: white;
   text-align: center;
+  padding: 10px;
+}
+
+.catalog-page .card img {
+  height: 200px;
+  object-fit: cover;
 }
 
 .mine-card h5 {
   font-weight: bold;
+  height: 100px;
+  margin-bottom: -18px;
+}
+
+.mine-li{
+  height: 80px;
+}
+
+.mine-h5{
+  height: 100%;
+  margin-bottom: 10px;
+  
+}
+
+.mine-card-footer {
+  margin-top: 20px;
+}
+
+.title{
+  font-size: 70px;
+  text-align: center;
+  margin-bottom: 50px;
+  margin-top: 50px;
 }
 
 .btn{
@@ -88,16 +124,16 @@ body {
 .popino{
   background-image: url('/images/fondo.jpeg');
   font-weight: bold;
-  color: white;
+  color: gainsboro;
   text-align: center;
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 78vh;
+  min-height: 80.2vh;
   min-width: 100%;
 }
 
 .popino p{
-  font-size: 30px;
+  font-size: 50px;
   margin-top: 20px;
   padding-right: 120px;
   padding-left: 120px;
@@ -110,8 +146,11 @@ body {
   width: 230px;
 }
 
-.popino btn{
-  width: 100px;
+.btn-index{
+  width: 385px;
+  font-size: 40px;
+  margin-top: 182px;
+  
 }
 
 .footer-mine{
@@ -122,6 +161,160 @@ body {
   margin-top: 2px;
   text-align: center;
   padding: 20px;
+  width: 100%;
+  bottom: 0;
+  padding: 10px;
+     
 
 }
+
+.container{
+  max-width: 100%;
+  margin-top: 40px;
+}
+
+.mine-filter{
+  padding-top: 20px;
+  width: 100%;
+  background-color: grey;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 30px;
+
+}
+
+.mine-filter label{
+  font-size: 20px;
+  text-align: center;
+  width: 100%;
+  font-weight: bold;
+}
+
+.mine-filter option{
+  font-weight: bold;
+}
+
+.mine-filter .form-group{
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.your-car{
+  width: 100%;
+}
+
+.filter-btn{
+  display: flex;
+  justify-content: center;
+  width: 130px;
+  padding: 10px;
+  align-items: center;
+}
+
+.your-car .col-md-3{
+  max-width: 100%;
+}
+
+.favorites{
+  background-color: #EBEBEB;
+
+}
+
+.row h3{
+  font-size:45px;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.btn-new{
+  width: 220px;
+  font-size: 30px;
+  padding: 15px;
+}
+
+.img-show{
+  width: 750px;
+}
+
+.col-md-7 p{
+  font-size: 20px;
+}
+
+.col-md-7 h4{
+  text-align: center;
+  font-weight: bold;
+}
+
+.buttons{
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+
+}
+
+.buttons .btn{
+  margin-right: 10px;
+}
+
+.email{
+    margin-bottom: 290px;
+    margin-top: 100px;
+    padding-left: 280px;
+    padding-right: 370px;
+}
+
+.email h1{
+  font-weight: bold;
+}
+
+.email label{
+  font-size: 30px;
+}
+
+.new {
+  font-size: 25px;
+}
+
+.new h1{
+  font-weight: bold;
+  font-size: 60px;
+  margin-left: 30px;
+}
+
+.new h3{
+  margin-left: 30px;
+}
+
+.new p{
+  margin-left: 30px;
+}
+
+.form-mine{
+  padding-right: 100px;
+}
+
+.login{
+  min-height: 73vh;
+  margin-top: 50px;
+  min-width: 100%;
+}
+
+.login p{
+  font-size: 20px;
+}
+
+.users{
+  text-align: center;
+}
+
+.users h2{
+  font-weight: bold;
+}
+
 

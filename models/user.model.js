@@ -3,31 +3,36 @@ const Schema = mongoose.Schema
 
 const userSchema = new Schema({
     username: {
-        type: String,
+        type: String
     },
     password: {
-        type: String,
+        type: String
     },
     name: {
-        type: String,
+        type: String
     },
     lastName: {
-        type: String,
+        type: String
     },
     address: {
-        type: String,
+        type: String
     },
     email: {
-        type: String,
+        type: String
     },
     phone: {
-        type: Number,
+        type: Number
     },
     role: {
         type: String,
         enum: ['USER', 'BOSS'],
         default: 'USER'
+    },
+    car: {
+        type: mongoose.ObjectId,
+        ref: 'Car'
     }
+    
 }, {
     timestamps: true
 })

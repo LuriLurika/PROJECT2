@@ -1,33 +1,47 @@
-<div class="container -index new">
+<div class="container-mine new">
 
-  <h1 style="font-weight: 100">{{theCar.brand}} {{theCar.model}}</h1>
+  <h1 >{{theCar.brand}} {{theCar.model}}</h1>
 
 
   <h3>{{theCar.price}}</h3>
 
   <div class="mine">
     <p>{{theCar.year}} | {{theCar.color}} | {{theCar.fuel}} | {{theCar.type}}</p>
-    <img src="{{theCar.photo}}" alt="{{theCar.brand}} {{theCar.model}}">
-
-    <p>{{theCar.description}}</p>
+    <div class="row">
+      <div class="col-lg-5">
+        <img class="img-show" src="{{theCar.photo}}" alt="{{theCar.brand}} {{theCar.model}}">
+      </div>
+      <div class="col-md-7">
+        
+        <p>{{theCar.description}}</p>
+        <hr>
+        
+          <h4>El vehículo se encuentra en esta zona</h4>
+          
+          <figure id="myMap"></figure>
+        
+      </div>
+    </div>
   </div>
 
-  <figure id="myMap"></figure>
-  <hr>
+  <div class="row buttons">
+  <a href="/catalog" class="btn">Volver</a>
+  <a href="/catalog/{{theCar.id}}/send" class="btn">Contacta con el Vendedor</a>
 
-  <a href="/catalog" class="btn btn-info">Volver</a>
-  <a href="/catalog/{{theCar.id}}/send" class="btn btn-info">Contacta con el Vendedor</a>
   {{#if isBoss}}
-  <form action="/catalog/{{theCar.id}}/delete" method="post">
-    <button type="submit" class="btn btn-info">Eliminar</button>
-  </form>
+    <form action="/catalog/{{theCar.id}}/delete" method="post">
+      <button type="submit" class="btn">Eliminar</button>
+    </form>
 
-  <a href="/catalog/{{theCar.id}}/edit" class="btn btn-info">Editar</a>
+    <a href="/catalog/{{theCar.id}}/edit" class="btn">Editar</a>
   {{/if}}
-</div>
 
-<input type="hidden" name="hiddenId" id="hiddenId" value="{{theCar.id}}">
+  <input type="hidden" name="hiddenId" id="hiddenId" value="{{theCar.id}}">
 
+  </div>
+  
+
+  
 
 <script src="/javascripts/mapStyles.js"></script>
 <script src="/javascripts/main.js"></script>
