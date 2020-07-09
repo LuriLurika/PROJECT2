@@ -1,29 +1,29 @@
-<div class="container place-index new">
+<div class="container -index new">
 
-    <h1 style="font-weight: 100">{{theCar.brand}} {{theCar.model}}</h1>
-    
+  <h1 style="font-weight: 100">{{theCar.brand}} {{theCar.model}}</h1>
 
-    <h3>{{theCar.price}}</h3>
-    
-    <div class="mine">
-        <p>{{theCar.year}} | {{theCar.color}} | {{theCar.fuel}} | {{theCar.type}}</p>
-        <img src="{{theCar.photo}}" alt="{{theCar.brand}} {{theCar.model}}">
-        
-        <p>{{theCar.description}}</p>
-    </div>
 
-    <figure id="myMap"></figure>
-    <hr>
+  <h3>{{theCar.price}}</h3>
 
-    <a href="/catalog" class="btn btn-info btn-mine">Volver</a>
-    <a href="/catalog/{{theCar.id}}/send" class="btn btn-info btn-mine">Contacta con el Vendedor</a>
-    {{#if isBoss}}
-    <form action="/catalog/{{theCar.id}}/delete" method="post">
-      <button type="submit" class="btn btn-info btn-mine">Eliminar</button>
-    </form>
-    
-    <a href="/catalog/{{theCar.id}}/edit" class="btn btn-info btn-mine">Editar</a>
-    {{/if}}
+  <div class="mine">
+    <p>{{theCar.year}} | {{theCar.color}} | {{theCar.fuel}} | {{theCar.type}}</p>
+    <img src="{{theCar.photo}}" alt="{{theCar.brand}} {{theCar.model}}">
+
+    <p>{{theCar.description}}</p>
+  </div>
+
+  <figure id="myMap"></figure>
+  <hr>
+
+  <a href="/catalog" class="btn btn-info">Volver</a>
+  <a href="/catalog/{{theCar.id}}/send" class="btn btn-info">Contacta con el Vendedor</a>
+  {{#if isBoss}}
+  <form action="/catalog/{{theCar.id}}/delete" method="post">
+    <button type="submit" class="btn btn-info">Eliminar</button>
+  </form>
+
+  <a href="/catalog/{{theCar.id}}/edit" class="btn btn-info">Editar</a>
+  {{/if}}
 </div>
 
 <input type="hidden" name="hiddenId" id="hiddenId" value="{{theCar.id}}">
@@ -31,5 +31,5 @@
 
 <script src="/javascripts/mapStyles.js"></script>
 <script src="/javascripts/main.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9kGiqiwIzSUP8hhM2uq-mdkTnwhzrOJM&callback=myMap"></script>
-
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA9kGiqiwIzSUP8hhM2uq-mdkTnwhzrOJM&callback=myMap"></script>
