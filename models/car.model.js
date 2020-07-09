@@ -3,10 +3,18 @@ const Schema = mongoose.Schema
 
 const carSchema = new Schema({
 
-    brand: String,
-    model: String,
-    year: Number,
-    color: String,
+    brand: {
+        type: String,
+    },
+    model: {
+        type: String,
+    },
+    year: {
+        type: Number,
+    },
+    color: {
+        type: String,
+    },
     fuel: {
         type: String,
         enum: ['Diésel', 'Gasolina', 'Eléctrico', 'Híbrido', 'Híbrido Enchufable', 'Gas Licuado', 'Gas Natural', 'Otros']
@@ -15,7 +23,9 @@ const carSchema = new Schema({
         type: String,
         enum: ['Berlina', 'Familiar', 'Coupe', 'Monovolumen', '4x4 SUV', 'Cabrio', 'Pick Up']
     },
-    price: String,
+    price: {
+        type: String,
+    },
     photo: {
         type: String,
         default: 'https://res.cloudinary.com/dz0aow7wm/image/upload/v1594049637/popinoCar/logo_dmxa3v.png'
@@ -29,7 +39,9 @@ const carSchema = new Schema({
             type: [Number]
         }
     },
-    email: String,
+    email: {
+        type: String,
+    },
     user: {
         type: mongoose.ObjectId,
         ref: 'User'

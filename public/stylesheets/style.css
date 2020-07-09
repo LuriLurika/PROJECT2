@@ -1,11 +1,11 @@
 body {
-  font-weight: 200; }
-
-h1, h2, h3 {
-  font-weight: 200; }
+  font-weight: 200;
+  background-color: #EBEBEB;
+  font-family: 'Roboto Condensed', sans-serif;
+  min-height: 81.6vh; }
 
 .navbar {
-  margin-bottom: 70px; }
+  margin-bottom: 3px; }
 
 #errorMsg {
   background-color: red;
@@ -21,12 +21,82 @@ h1, h2, h3 {
 
 .logo {
   width: 100px;
-  height: 70px; }
+  height: 100px; }
 
 .popino {
   background-image: './images/fondo.jpeg'; }
 
 .your-car #favorite {
   display: none; }
+
+.navbar-mine {
+  background-color: #000000; }
+
+.navbar-mine a {
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  margin-right: 28px; }
+
+.catalog-page .card img {
+  height: 150px;
+  object-fit: cover; }
+
+.catalog-page .card {
+  color: #111111; }
+
+.catalog-page h1 {
+  font-weight: bold;
+  text-align: center;
+  width: 3rem; }
+
+.mine-card {
+  margin-bottom: 30px;
+  background-color: white;
+  text-align: center; }
+
+.mine-card h5 {
+  font-weight: bold; }
+
+.btn {
+  background-color: black;
+  font-weight: bold;
+  border-color: black;
+  width: unset;
+  font-size: 18px;
+  color: white; }
+
+.popino {
+  background-image: url("/images/fondo.jpeg");
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 78vh;
+  min-width: 100%; }
+
+.popino p {
+  font-size: 30px;
+  margin-top: 20px;
+  padding-right: 120px;
+  padding-left: 120px; }
+
+.popino img {
+  vertical-align: middle;
+  border-style: none;
+  width: 230px; }
+
+.popino btn {
+  width: 100px; }
+
+.footer-mine {
+  background-color: black;
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  margin-top: 2px;
+  text-align: center;
+  padding: 20px; }
 
 /*# sourceMappingURL=style.css.map */
