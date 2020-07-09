@@ -68,9 +68,7 @@ router.get('/', (req, res) => {
                 const favorites = response[1].map(x=> x._doc).map(elm => {
                     return {
                         ...elm, isFavorite: response[0].some(fav => {
-                            console.log('comparacióin')
-                            console.log(fav.car._id)
-                            console.log(elm._id)
+
                          return `${fav.car._id}` === `${elm._id}`
                         })
                     }
